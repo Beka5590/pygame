@@ -8,6 +8,6 @@ class Player:
         self.power = None
         #  энергия героя, если энергия равна 0 то игрок пригрывает
 
-    def level(self):
+    def level_determination(self):
         pass
         #   при помощи позиции определяем уровень

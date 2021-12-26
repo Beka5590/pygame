@@ -7,6 +7,6 @@ class Background:
         pass
         #  загрузка основного фона игры, подсчет очков
 
-    def things(self):
+    def things_appear(self):
         pass
         #  появление предметов в рандомном местоположении

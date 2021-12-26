@@ -6,6 +6,6 @@ class Movement:
         pass
         #  движение героя
 
-    def energy(self):
+    def accumulation_energy(self):
         pass
         #  истекание энергии
