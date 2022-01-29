@@ -10,8 +10,8 @@ class Player:
         # filename = os.path.join('data', 'hero.jpg')
         self.sprite.image = pygame.image.load('data/cool_man.png')
         self.sprite.image = pygame.transform.scale(self.sprite.image, (100, 100))
-        self.sprite.rect = self.sprite.image.get_rect()
-        self.all_sprites.add(self.sprite)
+        self.all_sprites.add(self.all_sprites)
+        # self.sprite.rect = self.sprite.image.get_rect()
         #  загрузка изображения героя, определение позиции героя
         self.power = None
         #  энергия героя, если энергия равна 0 то игрок пригрывает

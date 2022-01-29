@@ -1,4 +1,3 @@
-# import pygame.display
 import select
 
 import pygame.transform
@@ -6,17 +5,16 @@ import pygame.transform
 from modules import *
 from player import Player
 from background import Background
-from button import Button
 pygame.init()
 
 
 class Main:
     def __init__(self):
-        # self.MAINSCREEN = pygame.display.set_mode((640, 480))
         self.SCREEN = pygame.display.set_mode((640, 480))
+        self.screen_for_player = pygame.display.set_mode((640, 480))
         self.play_button = pygame.image.load('data/play_button.png')
         self.x_pos, self.y_pos = 0, 0
-        self.weigh, self.height = 20, 20
+        self.weigh, self.height = 20, 2
         self.clock = pygame.time.Clock()
         self.player = Player()
         self.right_move = False
@@ -27,7 +25,7 @@ class Main:
         self.fall_sound = pygame.mixer.Sound('data/multyashnyiy-zvuk-padeniya.mp3')
         self.start()
 
-    def start(self):
+    def start(self):  # начальное окно старта
         self.fon_music.play()
         self.SCREEN.fill((255, 255, 255))
         self.SCREEN.blit(self.play_button, (180, 292))
@@ -35,22 +33,19 @@ class Main:
         while run:
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
-                    run = False
+                    pygame.quit()
+                    sys.exit()
                 if i.type == pygame.MOUSEBUTTONDOWN and i.button == 1:
-                    print(i.pos, self.play_button.get_size())
                     if i.pos[0] >= 214 and i.pos[0] <= 430 and i.pos[1] >= 335 and i.pos[1] <= 420:
                         run = False
             pygame.time.delay(12)
             pygame.display.update()
-            # pygame.display.flip()
         self.fon_music.stop()
         self.create()
         self.move()
 
-    def game_over(self):
+    def game_over(self):  # окно при проигрыше
         self.fon_music.play()
-        # self.fail_music = pygame.mixer.Sound('data/fail_music.mp3')
-        # self.fail_music.play()
         run = True
         self.SCREEN.fill((0, 0, 0))
         over_photo = pygame.image.load('data/game_over.png')
@@ -60,8 +55,8 @@ class Main:
         while run:
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
-                    run = False
                     pygame.quit()
+                    sys.exit()
                 if i.type == pygame.MOUSEBUTTONDOWN and i.button == 1:
                     if i.pos[0] >= 2 and i.pos[0] <= 150 and i.pos[1] >= 1 and i.pos[1] <= 80:
                         self.fon_music.stop()
@@ -69,7 +64,7 @@ class Main:
                         self.move()
             pygame.display.flip()
 
-    def create(self):  # создание монет
+    def create(self):  # создание предметов для сбора энергии
         self.SCREEN.fill((255, 255, 255))
         for i in range(5):
             self.SCREEN.blit(self.pizza_image, (random.randint(20, 480), random.randint(10, 480)))
@@ -80,14 +75,14 @@ class Main:
         while moving:
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
-                    moving = False
                     pygame.quit()
+                    sys.exit()
                 if i.type == pygame.MOUSEBUTTONDOWN:
                     if i.button == 1 and self.left_move is True:
-                        self.y_pos -= 50
+                        self.y_pos -= 60
                         self.x_pos += 25
                     if i.button == 1 and self.right_move is True:
-                        self.y_pos -= 50
+                        self.y_pos -= 60
                         self.x_pos -= 25
             if self.y_pos == 390:
                 self.x_pos = 0
@@ -117,11 +112,16 @@ class Main:
                     self.right_move = True
                     self.left_move = False
             self.SCREEN.fill((255, 255, 255))
+
             self.SCREEN.blit(self.player.sprite.image, (self.x_pos, self.y_pos))
-            # self.clock.tick(60) / 1000.0
             pygame.time.delay(12)
             pygame.display.update()
             pygame.display.flip()
+
+    # def checkCollision(self):
+    #     col = pygame.sprite.collide_rect(self.sprite.pizza, self.player.sprite.rect)
+    #     if col == True:
+    #         print('collision')
 
 
 if __name__ == '__main__':
